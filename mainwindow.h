@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStackedLayout>
+
+#include "channelmanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +20,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QStackedLayout *faderLayout;
+
+    ChannelManager *chans;
 };
 
 #endif // MAINWINDOW_H

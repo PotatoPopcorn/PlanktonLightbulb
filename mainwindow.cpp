@@ -6,6 +6,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    chans = new ChannelManager();
+    faderLayout = new QStackedLayout();
+
+    ui->fadersWidget->setLayout(faderLayout);
+    faderLayout->addWidget(chans);
+
 }
 
 MainWindow::~MainWindow()
