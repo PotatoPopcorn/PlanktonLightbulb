@@ -13,6 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->fadersWidget->setLayout(faderLayout);
     faderLayout->addWidget(chans);
 
+    networkHand = new NetworkHandler();
+
 }
 
 MainWindow::~MainWindow()

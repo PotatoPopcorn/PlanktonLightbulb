@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,12 +27,14 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     channel.cpp \
-    channelmanager.cpp
+    channelmanager.cpp \
+    networkhandler.cpp
 
 HEADERS += \
         mainwindow.h \
     channel.h \
-    channelmanager.h
+    channelmanager.h \
+    networkhandler.h
 
 FORMS += \
         mainwindow.ui \

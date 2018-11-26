@@ -5,6 +5,7 @@
 #include <QStackedLayout>
 
 #include "channelmanager.h"
+#include "networkhandler.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,7 @@ private:
     QStackedLayout *faderLayout;
 
     ChannelManager *chans;
+    NetworkHandler *networkHand;
 };
 
 #endif // MAINWINDOW_H
