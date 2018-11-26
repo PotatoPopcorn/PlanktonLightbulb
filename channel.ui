@@ -25,6 +25,9 @@
      <property name="text">
       <string>512</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
    <item>
@@ -34,6 +37,9 @@
        <width>30</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
       <string>N</string>
@@ -54,8 +60,14 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="maximum">
       <number>255</number>
+     </property>
+     <property name="pageStep">
+      <number>32</number>
      </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -76,10 +88,18 @@
      <property name="text">
       <string>0</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>networkEnableButton</tabstop>
+  <tabstop>faderSlider</tabstop>
+  <tabstop>valueLineEdit</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

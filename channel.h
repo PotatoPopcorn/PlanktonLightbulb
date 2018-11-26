@@ -1,6 +1,8 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+#include <QDebug>
+#include <QIntValidator>
 #include <QWidget>
 
 namespace Ui {
@@ -19,10 +21,17 @@ public:
     void setID(int id);
     int getID();
 
+private slots:
+
+    void on_valueLineEdit_textChanged(const QString &value);
+
+    void on_faderSlider_valueChanged(int position);
+
 private:
     Ui::Channel *ui;
 
     int m_id=-1;
+    int m_value = 0;
 };
 
 #endif // CHANNEL_H
