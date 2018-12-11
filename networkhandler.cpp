@@ -58,5 +58,12 @@ void NetworkHandler::sessionOpened()
 
 void NetworkHandler::handleConnection()
 {
-    //Figureout 2 way communication
+    QByteArray block("Connected\0\0");
+    //QDataStream out(&block, QIODevice::WriteOnly);
+    //out.setVersion(QDataStream::Qt_4_0);
+    //out << "Connected";
+    m_tcpSocket = m_tcpServer->nextPendingConnection();
+    connect(m_tcpSocket, &QAbstractSocket::disconnected, m_tcpSocket, &QObject::deleteLater);
+    m_tcpSocket->write(block);
+    m_tcpSocket->disconnectFromHost();
 }

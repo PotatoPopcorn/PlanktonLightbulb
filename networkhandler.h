@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QSettings>
+#include <QString>
 
 #include <QtNetwork/QNetworkConfiguration>
 #include <QtNetwork/QNetworkConfigurationManager>
@@ -18,13 +19,18 @@ class NetworkHandler : public QObject
 public:
     explicit NetworkHandler(QObject *parent = nullptr);
 
+signals:
+    void commandRecieved(QString cmd);
+
 private slots:
     void sessionOpened();
     void handleConnection();
 private:
     QTcpServer *m_tcpServer = nullptr;
+    QTcpSocket *m_tcpSocket = nullptr;
+    QDataStream *m_inStream;
     QNetworkSession *m_netSession = nullptr;
-    qint16 m_port = 21000;
+    quint16 m_port = 21000;
 };
 
 #endif // NETWORKHANDLER_H
