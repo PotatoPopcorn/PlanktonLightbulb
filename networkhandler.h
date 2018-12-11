@@ -23,14 +23,22 @@ signals:
     void commandRecieved(QString cmd);
 
 private slots:
-    void sessionOpened();
-    void handleConnection();
+    void newConnection();
+    void disconnected();
+    void readyRead();
+
 private:
-    QTcpServer *m_tcpServer = nullptr;
-    QTcpSocket *m_tcpSocket = nullptr;
-    QDataStream *m_inStream;
-    QNetworkSession *m_netSession = nullptr;
     quint16 m_port = 21000;
+
+    QTcpServer *m_server;
+    QHash<QTcpSocket*, QByteArray*> m_buffers;
+    QHash<QTcpSocket*, qint32*> m_sizes;
+
+    void dataRecieved(QByteArray data);
+    qint32 arrayToInt(QByteArray source);
+
 };
 
 #endif // NETWORKHANDLER_H
+
+//https://stackoverflow.com/questions/20546750/qtcpsocket-reading-and-writing

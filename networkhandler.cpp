@@ -3,67 +3,74 @@
 NetworkHandler::NetworkHandler(QObject *parent) : QObject(parent)
 {
     qDebug() << "Starting Server";
-    //Handle network configuration
-    //Basically copied from FortuneServer
-    QNetworkConfigurationManager netConfigMan;
-    if(netConfigMan.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired)
-    {
-        QSettings netSettings(QSettings::UserScope, QLatin1String("Plankton"), QLatin1String("LightBulb"));
-        netSettings.beginGroup(QLatin1String("QtNetwork"));
-        const QString networkID = netSettings.value(QLatin1String("DefaultNetworkConfiguration")).toString();
-        netSettings.endGroup();
-        QNetworkConfiguration netConfig = netConfigMan.configurationFromIdentifier(networkID);
-        if((netConfig.state() & QNetworkConfiguration::Discovered) != QNetworkConfiguration::Discovered)
-        {
-            netConfig = netConfigMan.defaultConfiguration();
-        }
-        m_netSession = new QNetworkSession(netConfig, this);
-        connect(m_netSession, &QNetworkSession::opened, this, &NetworkHandler::sessionOpened);
-        m_netSession->open();
-    }
-    else
-    {
-        sessionOpened();
-    }
-    connect(m_tcpServer, &QTcpServer::newConnection, this, &NetworkHandler::handleConnection);
+    m_server = new QTcpServer(this);
+    connect(m_server, &QTcpServer::newConnection, this, &NetworkHandler::newConnection);
+    qDebug() << "Listening: " << m_server->listen(QHostAddress::Any, m_port);
 }
 
-void NetworkHandler::sessionOpened()
+void NetworkHandler::newConnection()
 {
-    //Handle network configuration
-    //Basically copied from FortuneServer
-    if(m_netSession){
-        QNetworkConfiguration netConfig = m_netSession->configuration();
-        QString id;
-        if(netConfig.type() == QNetworkConfiguration::UserChoice)
-        {
-            id = m_netSession->sessionProperty(QLatin1String("UserChoiceConfiguration")).toString();
-        }
-        else
-        {
-            id = netConfig.identifier();
-        }
-        QSettings netSettings(QSettings::UserScope, QLatin1String("Plankton"), QLatin1String("LightBulb"));
-        netSettings.beginGroup(QLatin1String("QtNetwork"));
-        netSettings.setValue(QLatin1String("DefaultNetworkConfiguration"), id);
-        netSettings.endGroup();
-    }
-
-    m_tcpServer = new QTcpServer(this);
-    if(!m_tcpServer->listen(QHostAddress::Any, m_port))
+    while(m_server->hasPendingConnections())
     {
-        QMessageBox::critical(nullptr, tr("Plankton LightBulb"), tr("Cannot Start Server: %1").arg(m_tcpServer->errorString()));
+        QTcpSocket *socket = m_server->nextPendingConnection();
+        connect(socket, &QTcpSocket::readyRead, this, &NetworkHandler::readyRead);
+        connect(socket, &QTcpSocket::disconnected, this, &NetworkHandler::disconnected);
+        QByteArray *buffer = new QByteArray();
+        qint32 *s = new qint32(0);
+        m_buffers.insert(socket, buffer);
+        m_sizes.insert(socket, s);
     }
 }
 
-void NetworkHandler::handleConnection()
+void NetworkHandler::disconnected()
 {
-    QByteArray block("Connected\0\0");
-    //QDataStream out(&block, QIODevice::WriteOnly);
-    //out.setVersion(QDataStream::Qt_4_0);
-    //out << "Connected";
-    m_tcpSocket = m_tcpServer->nextPendingConnection();
-    connect(m_tcpSocket, &QAbstractSocket::disconnected, m_tcpSocket, &QObject::deleteLater);
-    m_tcpSocket->write(block);
-    m_tcpSocket->disconnectFromHost();
+    QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+    QByteArray *buffer = m_buffers.value(socket);
+    qint32 *s = m_sizes.value(socket);
+    socket->deleteLater();
+    delete buffer;
+    delete s;
+}
+
+void NetworkHandler::readyRead()
+{
+    QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
+    QByteArray *buffer = m_buffers.value(socket);
+    qint32 *s = m_sizes.value(socket);
+    qint32 size = *s;
+    while(socket->bytesAvailable() > 0)
+    {
+        buffer->append(socket->readAll());
+        while((size == 0 && buffer->size() >=4) || (size > 0 && buffer->size() >= size))
+        {
+            if (size == 0 && buffer->size() >=4)
+            {
+                size = arrayToInt(buffer->mid(0, 4));
+                *s = size;
+                buffer->remove(0, 4);
+            }
+            if (size > 0 && buffer->size() >= size)
+            {
+                QByteArray data = buffer->mid(0, size);
+                buffer->remove(0,size);
+                size=0;
+                *s = size;
+                dataRecieved(data);
+            }
+        }
+    }
+}
+
+void NetworkHandler::dataRecieved(QByteArray data)
+{
+    QString s_data = QString::fromLatin1(data.data());
+    qDebug() << "Data Recieved: " << s_data;
+}
+
+qint32 NetworkHandler::arrayToInt(QByteArray source)
+{
+    qint32 temp;
+    QDataStream data(&source, QIODevice::ReadWrite);
+    data >> temp;
+    return temp;
 }
