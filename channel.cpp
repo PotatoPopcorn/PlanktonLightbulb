@@ -26,6 +26,18 @@ int Channel::getID()
     return m_id;
 }
 
+void Channel::setValue(int value)
+{
+    ui->faderSlider->setValue(value);
+    ui->valueLineEdit->setText(QString::number(value));
+    m_value = value;
+}
+
+int Channel::getValue()
+{
+    return m_value;
+}
+
 void Channel::on_valueLineEdit_textChanged(const QString &value)
 {
     ui->faderSlider->setValue(value.toInt());

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStackedLayout>
+#include <QString>
 
 #include "channelmanager.h"
 #include "networkhandler.h"
@@ -18,6 +19,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+public slots:
+    void recieveCommand(QString cmd);
 
 private:
     Ui::MainWindow *ui;

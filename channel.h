@@ -21,6 +21,9 @@ public:
     void setID(int id);
     int getID();
 
+    void setValue(int value);
+    int getValue();
+
 private slots:
 
     void on_valueLineEdit_textChanged(const QString &value);

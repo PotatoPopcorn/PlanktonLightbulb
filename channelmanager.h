@@ -19,6 +19,8 @@ public:
     explicit ChannelManager(QWidget *parent = 0);
     ~ChannelManager();
 
+    bool setChan(int chan, int value);
+
 private:
     Ui::ChannelManager *ui;
     QHBoxLayout *m_fadersLayout;

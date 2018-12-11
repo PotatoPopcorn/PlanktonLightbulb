@@ -15,9 +15,43 @@ MainWindow::MainWindow(QWidget *parent) :
 
     networkHand = new NetworkHandler();
 
+    connect(networkHand, &NetworkHandler::commandRecieved, this, &MainWindow::recieveCommand);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::recieveCommand(QString cmd)
+{
+    if(cmd.startsWith("SetChan(", Qt::CaseInsensitive))
+    {
+        QString params = cmd.mid(8, cmd.indexOf(')')-8);
+        QRegExp rx("(\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 2)
+        {
+            bool res1;
+            bool res2;
+            int chan = query.at(0).toInt(&res1);
+            int val = query.at(1).toInt(&res2);
+            if(res1 && res2)
+            {
+                chans->setChan(chan, val);
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
 }

@@ -24,3 +24,9 @@ ChannelManager::~ChannelManager()
 {
     delete ui;
 }
+
+bool ChannelManager::setChan(int chan, int value)
+{
+    m_chans[chan-1]->setValue(value);
+    return true;
+}

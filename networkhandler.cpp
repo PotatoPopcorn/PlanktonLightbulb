@@ -65,6 +65,7 @@ void NetworkHandler::dataRecieved(QByteArray data)
 {
     QString s_data = QString::fromLatin1(data.data());
     qDebug() << "Data Recieved: " << s_data;
+    emit (commandRecieved(s_data));
 }
 
 qint32 NetworkHandler::arrayToInt(QByteArray source)
