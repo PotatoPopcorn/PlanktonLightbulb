@@ -42,7 +42,7 @@
       <enum>Qt::NoFocus</enum>
      </property>
      <property name="text">
-      <string>N</string>
+      <string>A</string>
      </property>
      <property name="checkable">
       <bool>true</bool>

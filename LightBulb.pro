@@ -40,3 +40,17 @@ FORMS += \
         mainwindow.ui \
     channel.ui \
     channelmanager.ui
+
+unix|win32: LIBS += -L$$PWD/../Libs/LPL/ -lplanklight
+
+INCLUDEPATH += $$PWD/../Libs/LPL
+DEPENDPATH += $$PWD/../Libs/LPL
+
+unix|win32: LIBS += -lftd2xx
+
+
+unix|win32: LIBS += -lboost_chrono.1.68
+
+unix|win32: LIBS += -lboost_system.1.68
+
+unix|win32: LIBS += -lboost_thread.1.68

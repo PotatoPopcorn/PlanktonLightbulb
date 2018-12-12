@@ -5,6 +5,9 @@
 #include <QStackedLayout>
 #include <QString>
 
+#include "pldeviceenttecpro.h"
+#include "pluniverse.h"
+
 #include "channelmanager.h"
 #include "networkhandler.h"
 
