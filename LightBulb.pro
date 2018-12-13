@@ -28,18 +28,26 @@ SOURCES += \
         mainwindow.cpp \
     channel.cpp \
     channelmanager.cpp \
-    networkhandler.cpp
+    networkhandler.cpp \
+    settingspanel.cpp \
+    outputhandler.cpp \
+    settingsenttecpro.cpp
 
 HEADERS += \
         mainwindow.h \
     channel.h \
     channelmanager.h \
-    networkhandler.h
+    networkhandler.h \
+    settingspanel.h \
+    outputhandler.h \
+    settingsenttecpro.h
 
 FORMS += \
         mainwindow.ui \
     channel.ui \
-    channelmanager.ui
+    channelmanager.ui \
+    settingspanel.ui \
+    settingsenttecpro.ui
 
 unix|win32: LIBS += -L$$PWD/../Libs/LPL/ -lplanklight
 

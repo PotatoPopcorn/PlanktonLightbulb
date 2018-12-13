@@ -59,6 +59,11 @@
        <attribute name="title">
         <string>Settings</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QWidget" name="settingsWidget" native="true"/>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

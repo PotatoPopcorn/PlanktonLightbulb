@@ -10,6 +10,7 @@
 
 #include "channelmanager.h"
 #include "networkhandler.h"
+#include "settingspanel.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +33,7 @@ private:
 
     ChannelManager *chans;
     NetworkHandler *networkHand;
+    SettingsPanel *settingsTab;
 };
 
 #endif // MAINWINDOW_H

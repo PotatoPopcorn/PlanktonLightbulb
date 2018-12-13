@@ -15,17 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     networkHand = new NetworkHandler();
 
-    connect(networkHand, &NetworkHandler::commandRecieved, this, &MainWindow::recieveCommand);
+    settingsTab = new SettingsPanel();
+    QStackedLayout *settingsLayout = new QStackedLayout();
+    settingsLayout->addWidget(settingsTab);
+    ui->settingsWidget->setLayout(settingsLayout);
 
-    PlanktonLighting::PLDeviceEnttecPro *enttec = new PlanktonLighting::PLDeviceEnttecPro();
-    enttec->initDevice("0 2");
-    PlanktonLighting::PLUniverse *uni = new PlanktonLighting::PLUniverse();
-    uni->setChan(1, 255);
-    uni->setChan(4, 255);
-    uni->setChan(7, 255);
-    uni->setChan(10, 255);
-    enttec->sendDMX(uni);
-    enttec->closeDevice();
+    connect(networkHand, &NetworkHandler::commandRecieved, this, &MainWindow::recieveCommand);
 
 }
 
