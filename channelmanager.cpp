@@ -18,6 +18,11 @@ ChannelManager::ChannelManager(QWidget *parent) :
         m_chans[i]->setID(i+1);
         m_fadersLayout->addWidget(m_chans[i]);
     }
+
+    m_updater = new ChannelUpdater(m_chans);
+    m_updater->start();
+
+
 }
 
 ChannelManager::~ChannelManager()

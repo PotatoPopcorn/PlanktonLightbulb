@@ -2,10 +2,12 @@
 #define CHANNELMANAGER_H
 
 #include <QHBoxLayout>
+#include <QReadLocker>
 #include <QVector>
 #include <QWidget>
 
 #include "channel.h"
+#include "channelupdater.h"
 
 namespace Ui {
 class ChannelManager;
@@ -26,6 +28,7 @@ private:
     QHBoxLayout *m_fadersLayout;
 
     Channel *m_chans[512];
+    ChannelUpdater *m_updater;
 };
 
 #endif // CHANNELMANAGER_H

@@ -31,7 +31,8 @@ SOURCES += \
     networkhandler.cpp \
     settingspanel.cpp \
     outputhandler.cpp \
-    settingsenttecpro.cpp
+    settingsenttecpro.cpp \
+    channelupdater.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     networkhandler.h \
     settingspanel.h \
     outputhandler.h \
-    settingsenttecpro.h
+    settingsenttecpro.h \
+    channelupdater.h
 
 FORMS += \
         mainwindow.ui \

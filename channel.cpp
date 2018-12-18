@@ -28,14 +28,20 @@ int Channel::getID()
 
 void Channel::setValue(int value)
 {
+    m_rwLock.lockForWrite();
     ui->faderSlider->setValue(value);
     ui->valueLineEdit->setText(QString::number(value));
     m_value = value;
+    m_rwLock.unlock();
 }
 
 int Channel::getValue()
 {
-    return m_value;
+    m_rwLock.lockForRead();
+    int val = m_value;
+    m_rwLock.unlock();
+    return val;
+
 }
 
 void Channel::on_valueLineEdit_textChanged(const QString &value)
@@ -47,5 +53,7 @@ void Channel::on_valueLineEdit_textChanged(const QString &value)
 void Channel::on_faderSlider_valueChanged(int position)
 {
     ui->valueLineEdit->setText(QString::number(position));
+    m_rwLock.lockForWrite();
     m_value = position;
+    m_rwLock.unlock();
 }

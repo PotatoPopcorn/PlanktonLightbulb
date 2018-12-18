@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QIntValidator>
+#include <QReadLocker>
 #include <QWidget>
 
 namespace Ui {
@@ -35,6 +36,8 @@ private:
 
     int m_id=-1;
     int m_value = 0;
+
+    QReadWriteLock m_rwLock;
 };
 
 #endif // CHANNEL_H
