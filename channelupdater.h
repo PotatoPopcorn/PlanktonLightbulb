@@ -9,11 +9,12 @@
 #include "pluniverse.h"
 
 #include "channel.h"
+#include "outputhandler.h"
 
 class ChannelUpdater : public QThread
 {
 public:
-    ChannelUpdater(Channel *chans[512]);
+    ChannelUpdater(Channel *chans[512], OutputHandler *outputHand);
     void run();
     void stopRunning();
 
@@ -24,6 +25,7 @@ private:
     PlanktonLighting::PLUniverse *m_uni;
 
     Channel *m_chans[512];
+    OutputHandler *m_outHand;
 };
 
 #endif // CHANNELUPDATER_H

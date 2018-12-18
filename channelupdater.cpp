@@ -1,7 +1,9 @@
 #include "channelupdater.h"
 
-ChannelUpdater::ChannelUpdater(Channel *chans[512])
+ChannelUpdater::ChannelUpdater(Channel *chans[512], OutputHandler *outputHand)
 {
+    m_outHand = outputHand;
+
     for (int i = 0; i < 512; i++)
     {
         m_chans[i] = chans[i];
@@ -23,6 +25,7 @@ void ChannelUpdater::run()
         {
             m_uni->setChan(i+1, m_chans[i]->getValue());
         }
+        m_outHand->sendUniverse(m_uni);
         msleep(5);
         m_localLock.lock();
     }

@@ -7,6 +7,14 @@ OutputHandler::OutputHandler()
     devWid->setLayout(devLayout);
 }
 
+void OutputHandler::sendUniverse(PlanktonLighting::PLUniverse *uni)
+{
+    if(activeOutput == "enttecpro")
+    {
+        enttecProSettings->sendUni(uni);
+    }
+}
+
 QWidget* OutputHandler::changeDevice(QString newDev)
 {
     while (QLayoutItem *item = devWid->layout()->takeAt(0)) {

@@ -20,6 +20,7 @@ public:
     explicit SettingsEnttecPro(QWidget *parent = nullptr);
     ~SettingsEnttecPro();
 
+    bool sendUni(PlanktonLighting::PLUniverse *uni);
     bool stopDevice();
 
 public slots:

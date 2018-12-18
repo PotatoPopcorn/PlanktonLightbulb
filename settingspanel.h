@@ -18,6 +18,8 @@ public:
     explicit SettingsPanel(QWidget *parent = nullptr);
     ~SettingsPanel();
 
+    OutputHandler* getOutputHandler();
+
 private slots:
     void on_comboBox_currentIndexChanged(const QString &arg1);
 

@@ -8,6 +8,7 @@
 
 #include "channel.h"
 #include "channelupdater.h"
+#include "outputhandler.h"
 
 namespace Ui {
 class ChannelManager;
@@ -22,8 +23,11 @@ public:
     ~ChannelManager();
 
     bool setChan(int chan, int value);
+    void setOutput(OutputHandler *outputHand);
 
 private:
+    bool m_outSet = false;
+
     Ui::ChannelManager *ui;
     QHBoxLayout *m_fadersLayout;
 

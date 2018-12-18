@@ -7,6 +7,8 @@
 #include <QStackedLayout>
 #include <QWidget>
 
+#include "pluniverse.h"
+
 #include "settingsenttecpro.h"
 
 class OutputHandler : public QObject
@@ -14,6 +16,8 @@ class OutputHandler : public QObject
     Q_OBJECT
 public:
     OutputHandler();
+
+    void sendUniverse(PlanktonLighting::PLUniverse *uni);
 
     QWidget* changeDevice(QString newDev);
     QWidget* getWidget();

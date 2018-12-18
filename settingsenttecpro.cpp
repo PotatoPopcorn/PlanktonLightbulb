@@ -13,6 +13,15 @@ SettingsEnttecPro::SettingsEnttecPro(QWidget *parent) :
     }
 }
 
+bool SettingsEnttecPro::sendUni(PlanktonLighting::PLUniverse *uni)
+{
+    if(isRunning)
+    {
+        return device->sendDMX(uni);
+    }
+    return false;
+}
+
 bool SettingsEnttecPro::stopDevice()
 {
     if(isRunning)

@@ -15,6 +15,11 @@ SettingsPanel::~SettingsPanel()
     delete ui;
 }
 
+OutputHandler* SettingsPanel::getOutputHandler()
+{
+    return outHand;
+}
+
 void SettingsPanel::on_comboBox_currentIndexChanged(const QString &newDev)
 {
 

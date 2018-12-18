@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->settingsWidget->setLayout(settingsLayout);
 
     connect(networkHand, &NetworkHandler::commandRecieved, this, &MainWindow::recieveCommand);
+    chans->setOutput(settingsTab->getOutputHandler());
 
 }
 
