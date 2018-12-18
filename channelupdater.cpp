@@ -20,13 +20,13 @@ void ChannelUpdater::run()
     while(m_keepAlive)
     {
         m_localLock.unlock();
-        qDebug() << "Thread is running: " << QTime::currentTime().msec();
+        //qDebug() << "Thread is running: " << QTime::currentTime().msec();
         for (int i = 0; i < 512; i++)
         {
             m_uni->setChan(i+1, m_chans[i]->getValue());
         }
         m_outHand->sendUniverse(m_uni);
-        msleep(5);
+        msleep(3);
         m_localLock.lock();
     }
     m_localLock.unlock();

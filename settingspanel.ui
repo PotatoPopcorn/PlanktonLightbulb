@@ -41,15 +41,7 @@
       </item>
       <item>
        <widget class="QWidget" name="outputSettingsWidget" native="true">
-        <layout class="QVBoxLayout" name="verticalLayout_3">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>This device has no settings</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QVBoxLayout" name="verticalLayout_3"/>
        </widget>
       </item>
      </layout>

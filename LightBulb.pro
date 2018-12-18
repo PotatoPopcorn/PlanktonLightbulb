@@ -32,7 +32,8 @@ SOURCES += \
     settingspanel.cpp \
     outputhandler.cpp \
     settingsenttecpro.cpp \
-    channelupdater.cpp
+    channelupdater.cpp \
+    settingsartnet.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,14 +43,16 @@ HEADERS += \
     settingspanel.h \
     outputhandler.h \
     settingsenttecpro.h \
-    channelupdater.h
+    channelupdater.h \
+    settingsartnet.h
 
 FORMS += \
         mainwindow.ui \
     channel.ui \
     channelmanager.ui \
     settingspanel.ui \
-    settingsenttecpro.ui
+    settingsenttecpro.ui \
+    settingsartnet.ui
 
 unix|win32: LIBS += -L$$PWD/../Libs/LPL/ -lplanklight
 

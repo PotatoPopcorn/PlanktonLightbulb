@@ -28,8 +28,8 @@ QWidget* OutputHandler::changeDevice(QString newDev)
         devWid->layout()->addWidget(dummyLabel);
     }
     else if(activeOutput == "artnet"){
-        QLabel *dummyLabel = new QLabel("This device hasn't been implemented yet");
-        devWid->layout()->addWidget(dummyLabel);
+        artnetSettings = new SettingsArtnet();
+        devWid->layout()->addWidget(artnetSettings);
     }
     else if(activeOutput == "enttecpro")
     {
@@ -48,6 +48,7 @@ bool OutputHandler::stopActiveDevice()
     if(activeOutput == "enttecpro")
     {
         //return enttecProSettings->stopDevice();
+        return false;
     }
     return true;
 }

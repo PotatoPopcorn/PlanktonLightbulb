@@ -9,6 +9,7 @@
 
 #include "pluniverse.h"
 
+#include "settingsartnet.h"
 #include "settingsenttecpro.h"
 
 class OutputHandler : public QObject
@@ -26,6 +27,7 @@ private:
     bool stopActiveDevice();
 
     QString activeOutput = "dummy";
+    SettingsArtnet *artnetSettings;
     SettingsEnttecPro *enttecProSettings;
     QWidget *devWid;
 };
