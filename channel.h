@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QIntValidator>
 #include <QReadLocker>
+#include <QTime>
 #include <QWidget>
 
 namespace Ui {
@@ -22,6 +23,7 @@ public:
     void setID(int id);
     int getID();
 
+    void setFade(int newValue, int mSec);
     void setValue(int value);
     int getValue();
 
@@ -37,7 +39,15 @@ private:
     int m_id=-1;
     int m_value = 0;
 
+    bool m_isFading = false;
+    QTime m_fadeTime;
+    int m_fadeDuration = 0;
+    int m_fadeVS = 0;
+    int m_fadeVF = 0;
+
+
     QReadWriteLock m_rwLock;
+
 };
 
 #endif // CHANNEL_H
