@@ -26,6 +26,7 @@ public:
 private:
     bool stopActiveDevice();
 
+    bool deviceRunning = false;
     QString activeOutput = "dummy";
     SettingsArtnet *artnetSettings;
     SettingsEnttecPro *enttecProSettings;

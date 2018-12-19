@@ -5,6 +5,9 @@ OutputHandler::OutputHandler()
     devWid = new QWidget();
     QStackedLayout *devLayout = new QStackedLayout();
     devWid->setLayout(devLayout);
+
+    artnetSettings = new SettingsArtnet();
+    enttecProSettings = new SettingsEnttecPro();
 }
 
 void OutputHandler::sendUniverse(PlanktonLighting::PLUniverse *uni)
@@ -12,6 +15,10 @@ void OutputHandler::sendUniverse(PlanktonLighting::PLUniverse *uni)
     if(activeOutput == "enttecpro")
     {
         enttecProSettings->sendUni(uni);
+    }
+    else if (activeOutput == "artnet")
+    {
+        artnetSettings->sendUni(uni);
     }
 }
 
@@ -28,12 +35,10 @@ QWidget* OutputHandler::changeDevice(QString newDev)
         devWid->layout()->addWidget(dummyLabel);
     }
     else if(activeOutput == "artnet"){
-        artnetSettings = new SettingsArtnet();
         devWid->layout()->addWidget(artnetSettings);
     }
     else if(activeOutput == "enttecpro")
     {
-        enttecProSettings = new SettingsEnttecPro();
         devWid->layout()->addWidget(enttecProSettings);
     }
     return devWid;
@@ -47,8 +52,11 @@ bool OutputHandler::stopActiveDevice()
 {
     if(activeOutput == "enttecpro")
     {
-        //return enttecProSettings->stopDevice();
-        return false;
+        return enttecProSettings->stopDevice();
+    }
+    else if (activeOutput == "artnet")
+    {
+        return artnetSettings->stopDevice();
     }
     return true;
 }
