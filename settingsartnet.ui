@@ -17,84 +17,84 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="addressLabel">
        <property name="text">
         <string>Address:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="addressEdit">
        <property name="text">
         <string>127.0.0.1</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="portLabel">
        <property name="text">
         <string>Port:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="portEdit">
        <property name="text">
         <string>6454</string>
        </property>
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="subNetLabel">
        <property name="text">
         <string>Universe Sub-Net</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="netLabel">
        <property name="text">
         <string>Universe Net</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_3">
+      <widget class="QLineEdit" name="subNetEdit">
        <property name="text">
         <string>0</string>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="lineEdit_4">
+      <widget class="QLineEdit" name="netEdit">
        <property name="text">
         <string>0</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_5">
+      <widget class="QLabel" name="physicalLabel">
        <property name="text">
-        <string>Phusical Universe</string>
+        <string>Physical Universe</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_5">
+      <widget class="QLineEdit" name="physicalEdit">
        <property name="text">
         <string>0</string>
        </property>
       </widget>
      </item>
      <item row="5" column="0">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="sequenceLabel">
        <property name="text">
         <string>Sequence Ident</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="sequenceBox">
        <item>
         <property name="text">
          <string>On</string>
@@ -120,6 +120,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="stopButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Stop</string>
        </property>
