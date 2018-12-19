@@ -29,25 +29,20 @@ int Channel::getID()
 
 void Channel::setValue(int value)
 {
-    m_rwLock.lockForWrite();
     ui->faderSlider->setValue(value);
-    ui->valueLineEdit->setText(QString::number(value));
-    m_value = value;
-    m_rwLock.unlock();
 }
 
 int Channel::getValue()
 {
-    m_rwLock.lockForRead();
     int val = 0;
     if(m_isFading)
     {
-        val = (((m_fadeVF-m_fadeVS)/m_fadeDuration)*m_fadeTime.elapsed())+m_fadeVS;
+        val = (((m_fadeVF-m_fadeVS)*m_fadeTime.elapsed()/m_fadeDuration))+m_fadeVS;
+
         ui->faderSlider->setValue(val);
-        ui->valueLineEdit->setText(QString::number(val));
-        m_value = val;
-        if(val == m_fadeVF)
+        if(m_fadeTime.elapsed() > m_fadeDuration)
         {
+            m_fadeVF = val;
             m_isFading = false;
         }
     }
@@ -55,7 +50,6 @@ int Channel::getValue()
     {
         val = m_value;
     }
-    m_rwLock.unlock();
     return val;
 
 }

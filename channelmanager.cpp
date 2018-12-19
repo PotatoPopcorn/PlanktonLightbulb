@@ -31,6 +31,12 @@ bool ChannelManager::setChan(int chan, int value)
     return true;
 }
 
+bool ChannelManager::setFade(int chan, int value, int time)
+{
+    m_chans[chan-1]->setFade(value, time);
+    return true;
+}
+
 void ChannelManager::setOutput(OutputHandler *outputHand)
 {
     m_updater = new ChannelUpdater(m_chans, outputHand);

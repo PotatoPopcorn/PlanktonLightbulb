@@ -23,6 +23,7 @@ public:
     ~ChannelManager();
 
     bool setChan(int chan, int value);
+    bool setFade(int chan, int value, int time);
     void setOutput(OutputHandler *outputHand);
 
 private:
