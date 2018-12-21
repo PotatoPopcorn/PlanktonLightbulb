@@ -42,3 +42,8 @@ void ChannelManager::setOutput(OutputHandler *outputHand)
     m_updater = new ChannelUpdater(m_chans, outputHand);
     m_updater->start();
 }
+
+void ChannelManager::stopUpdater()
+{
+    m_updater->stopRunning();
+}

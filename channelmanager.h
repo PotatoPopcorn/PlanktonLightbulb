@@ -26,6 +26,9 @@ public:
     bool setFade(int chan, int value, int time);
     void setOutput(OutputHandler *outputHand);
 
+public slots:
+    void stopUpdater();
+
 private:
     bool m_outSet = false;
 

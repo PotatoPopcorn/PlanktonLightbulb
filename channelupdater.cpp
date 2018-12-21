@@ -23,7 +23,9 @@ void ChannelUpdater::run()
         //qDebug() << "Thread is running: " << QTime::currentTime().msec();
         for (int i = 0; i < 512; i++)
         {
-            m_uni->setChan(i+1, m_chans[i]->getValue());
+            int val = m_chans[i]->getValue();
+            qDebug() << i << " set to " <<  val;
+            m_uni->setChan(i+1, val);
         }
         m_outHand->sendUniverse(m_uni);
         msleep(10);

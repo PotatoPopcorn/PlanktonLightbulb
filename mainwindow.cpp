@@ -23,11 +23,17 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(networkHand, &NetworkHandler::commandRecieved, this, &MainWindow::recieveCommand);
     chans->setOutput(settingsTab->getOutputHandler());
 
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    chans->stopUpdater();
 }
 
 void MainWindow::recieveCommand(QString cmd)
