@@ -41,6 +41,11 @@ bool SettingsEnttecPro::stopDevice()
     return false;
 }
 
+int SettingsEnttecPro::countDevices()
+{
+    return utils->countDevices();
+}
+
 SettingsEnttecPro::~SettingsEnttecPro()
 {
     delete ui;

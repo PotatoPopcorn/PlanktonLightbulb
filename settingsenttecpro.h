@@ -23,6 +23,8 @@ public:
     bool sendUni(PlanktonLighting::PLUniverse *uni);
     bool stopDevice();
 
+    int countDevices();
+
 public slots:
 
 private slots:

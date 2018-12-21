@@ -32,11 +32,6 @@
           <string>Artnet</string>
          </property>
         </item>
-        <item>
-         <property name="text">
-          <string>Enttec DMX Pro</string>
-         </property>
-        </item>
        </widget>
       </item>
       <item>

@@ -20,6 +20,8 @@ public:
 
     void sendUniverse(PlanktonLighting::PLUniverse *uni);
 
+    bool deviceExists(QString device);
+
     QWidget* changeDevice(QString newDev);
     QWidget* getWidget();
 

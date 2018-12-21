@@ -8,6 +8,10 @@ SettingsPanel::SettingsPanel(QWidget *parent) :
     ui->setupUi(this);
     outHand = new OutputHandler();
     ui->outputSettingsWidget->layout()->addWidget(outHand->getWidget());
+    if(outHand->deviceExists("enttecpro"))
+    {
+        ui->comboBox->addItem("Enttec DMX Pro");
+    }
 }
 
 SettingsPanel::~SettingsPanel()

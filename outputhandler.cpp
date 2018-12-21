@@ -22,6 +22,19 @@ void OutputHandler::sendUniverse(PlanktonLighting::PLUniverse *uni)
     }
 }
 
+bool OutputHandler::deviceExists(QString device)
+{
+    if(device == "dummy" || device == "artnet")
+    {
+        return true;
+    }
+    else if(device == "enttecpro")
+    {
+        return enttecProSettings->countDevices() != 0;
+    }
+    return false;
+}
+
 QWidget* OutputHandler::changeDevice(QString newDev)
 {
     while (QLayoutItem *item = devWid->layout()->takeAt(0)) {
