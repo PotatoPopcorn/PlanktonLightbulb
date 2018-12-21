@@ -26,7 +26,7 @@ void ChannelUpdater::run()
             m_uni->setChan(i+1, m_chans[i]->getValue());
         }
         m_outHand->sendUniverse(m_uni);
-        msleep(3);
+        msleep(10);
         m_localLock.lock();
     }
     m_localLock.unlock();

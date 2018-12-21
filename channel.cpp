@@ -29,21 +29,27 @@ int Channel::getID()
 
 void Channel::setValue(int value)
 {
-    ui->faderSlider->setValue(value);
+    if(m_rwLock.tryLockForWrite())
+    {
+        m_value = value;
+        ui->faderSlider->setValue(value);
+        ui->valueLineEdit->setText(QString::number(value));
+        m_rwLock.unlock();
+    }
 }
 
 int Channel::getValue()
-{
+{   
     int val = 0;
     if(m_isFading)
     {
         val = (((m_fadeVF-m_fadeVS)*m_fadeTime.elapsed()/m_fadeDuration))+m_fadeVS;
 
-        ui->faderSlider->setValue(val);
         if(m_fadeTime.elapsed() > m_fadeDuration)
         {
-            m_fadeVF = val;
+            m_value = val;
             m_isFading = false;
+            ui->faderSlider->setStyleSheet("");
         }
     }
     else
@@ -62,20 +68,19 @@ void Channel::setFade(int newValue, int mSec)
     m_fadeVS = m_value;
     m_fadeVF = newValue;
     m_isFading = true;
+    ui->faderSlider->setStyleSheet("background-color:#333");
+    ui->faderSlider->setValue(m_fadeVF);
+    ui->valueLineEdit->setText(QString::number(m_fadeVF));
     m_rwLock.unlock();
 }
 
 
 void Channel::on_valueLineEdit_textChanged(const QString &value)
 {
-    ui->faderSlider->setValue(value.toInt());
-
+    setValue(value.toInt());
 }
 
 void Channel::on_faderSlider_valueChanged(int position)
 {
-    ui->valueLineEdit->setText(QString::number(position));
-    m_rwLock.lockForWrite();
-    m_value = position;
-    m_rwLock.unlock();
+    setValue(position);
 }
