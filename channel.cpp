@@ -29,12 +29,9 @@ int Channel::getID()
 
 void Channel::setValue(int value)
 {
-    if(m_rwLock.tryLockForWrite())
+    if(m_automated)
     {
-        m_value = value;
-        ui->faderSlider->setValue(value);
-        ui->valueLineEdit->setText(QString::number(value));
-        m_rwLock.unlock();
+        setValue_p(value);
     }
 }
 
@@ -47,9 +44,7 @@ int Channel::getValue()
 
         if(m_fadeTime.elapsed() > m_fadeDuration)
         {
-            m_value = val;
-            m_isFading = false;
-            ui->faderSlider->setStyleSheet("");
+            stopFade();
         }
     }
     else
@@ -62,6 +57,10 @@ int Channel::getValue()
 
 void Channel::setFade(int newValue, int mSec)
 {
+    if(!m_automated)
+    {
+        return;
+    }
     m_rwLock.lockForWrite();
     m_fadeTime.restart();
     m_fadeDuration = mSec;
@@ -69,18 +68,55 @@ void Channel::setFade(int newValue, int mSec)
     m_fadeVF = newValue;
     m_isFading = true;
     ui->faderSlider->setStyleSheet("background-color:#333");
+    m_stopReset = true;
     ui->faderSlider->setValue(m_fadeVF);
     ui->valueLineEdit->setText(QString::number(m_fadeVF));
+    m_stopReset = false;
     m_rwLock.unlock();
 }
 
 
 void Channel::on_valueLineEdit_textChanged(const QString &value)
 {
-    setValue(value.toInt());
+    if(m_stopReset) return;
+    if(m_isFading)
+    {
+        stopFade();
+    }
+    setValue_p(value.toInt());
 }
 
 void Channel::on_faderSlider_valueChanged(int position)
 {
-    setValue(position);
+    if(m_stopReset) return;
+    if(m_isFading)
+    {
+        stopFade();
+    }
+    setValue_p(position);
+}
+
+void Channel::on_networkEnableButton_clicked(bool checked)
+{
+    m_rwLock.lockForWrite();
+    m_automated = checked;
+    m_rwLock.unlock();
+}
+
+void Channel::setValue_p(int value)
+{
+    if(m_rwLock.tryLockForWrite())
+    {
+        m_value = value;
+        ui->faderSlider->setValue(value);
+        ui->valueLineEdit->setText(QString::number(value));
+        m_rwLock.unlock();
+    }
+}
+
+void Channel::stopFade()
+{
+    m_value = m_fadeVF;
+    m_isFading = false;
+    ui->faderSlider->setStyleSheet("");
 }

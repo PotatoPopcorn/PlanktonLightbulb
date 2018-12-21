@@ -33,6 +33,8 @@ private slots:
 
     void on_faderSlider_valueChanged(int position);
 
+    void on_networkEnableButton_clicked(bool checked);
+
 private:
     Ui::Channel *ui;
 
@@ -40,6 +42,8 @@ private:
     int m_value = 0;
 
     bool m_isFading = false;
+    bool m_automated = true;
+    bool m_stopReset = false;
     QTime m_fadeTime;
     int m_fadeDuration = 0;
     int m_fadeVS = 0;
@@ -47,6 +51,9 @@ private:
 
 
     QReadWriteLock m_rwLock;
+
+    void setValue_p(int value);
+    void stopFade();
 
 };
 
