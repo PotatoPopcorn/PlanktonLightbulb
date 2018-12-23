@@ -31,12 +31,15 @@ void Channel::setValue(int value)
 {
     if(m_automated)
     {
+        m_stopReset = true;
         setValue_p(value);
+        m_stopReset = false;
     }
 }
 
 int Channel::getValue()
 {   
+    m_rwLock.lockForRead();
     int val = 0;
     if(m_isFading)
     {
@@ -46,11 +49,14 @@ int Channel::getValue()
         {
             stopFade();
         }
+
+        m_value = val;
     }
     else
     {
         val = m_value;
     }
+    m_rwLock.unlock();
     return val;
 
 }
@@ -105,18 +111,18 @@ void Channel::on_networkEnableButton_clicked(bool checked)
 
 void Channel::setValue_p(int value)
 {
-    if(m_rwLock.tryLockForWrite())
-    {
-        m_value = value;
-        ui->faderSlider->setValue(value);
-        ui->valueLineEdit->setText(QString::number(value));
-        m_rwLock.unlock();
-    }
+    m_rwLock.lockForWrite();
+    m_value = value;
+    m_stopReset = true;
+    ui->faderSlider->setValue(value);
+    ui->valueLineEdit->setText(QString::number(value));
+    m_stopReset = false;
+    m_rwLock.unlock();
 }
 
 void Channel::stopFade()
 {
-    m_value = m_fadeVF;
+    //m_value = m_fadeVF;
     m_isFading = false;
     ui->faderSlider->setStyleSheet("");
 }

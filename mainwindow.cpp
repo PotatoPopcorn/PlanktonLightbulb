@@ -34,6 +34,7 @@ MainWindow::~MainWindow()
 void MainWindow::closeEvent(QCloseEvent *event)
 {
     chans->stopUpdater();
+
 }
 
 void MainWindow::recieveCommand(QString cmd)
