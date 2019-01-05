@@ -24,7 +24,7 @@ void ChannelUpdater::run()
         for (int i = 0; i < 512; i++)
         {
             int val = m_chans[i]->getValue();
-            qDebug() << i << " set to " <<  val;
+            //qDebug() << i << " set to " <<  val;
             m_uni->setChan(i+1, val);
         }
         m_outHand->sendUniverse(m_uni);

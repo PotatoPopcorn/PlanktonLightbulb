@@ -29,11 +29,11 @@ public:
 
 private slots:
 
-    void on_valueLineEdit_textChanged(const QString &value);
-
-    void on_faderSlider_valueChanged(int position);
+    void on_valueLineEdit_textEdited(const QString &value);
 
     void on_networkEnableButton_clicked(bool checked);
+
+    void on_faderSlider_sliderMoved(int position);
 
 private:
     Ui::Channel *ui;
@@ -43,16 +43,13 @@ private:
 
     bool m_isFading = false;
     bool m_automated = true;
-    bool m_stopReset = false;
     QTime m_fadeTime;
     int m_fadeDuration = 0;
     int m_fadeVS = 0;
     int m_fadeVF = 0;
 
-
     QReadWriteLock m_rwLock;
 
-    void setValue_p(int value);
     void stopFade();
 
 };
