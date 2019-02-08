@@ -26,16 +26,19 @@ private slots:
     void newConnection();
     void disconnected();
     void readyRead();
+    void sendMsg(QString msg);
 
 private:
     quint16 m_port = 21000;
 
     QTcpServer *m_server;
+    QTcpSocket *m_socket;
     QHash<QTcpSocket*, QByteArray*> m_buffers;
     QHash<QTcpSocket*, qint32*> m_sizes;
 
     void dataRecieved(QByteArray data);
     qint32 arrayToInt(QByteArray source);
+    QByteArray intToArray(qint32 source);
 
 };
 

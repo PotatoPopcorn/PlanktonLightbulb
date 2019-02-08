@@ -34,13 +34,13 @@ void NetworkHandler::disconnected()
 
 void NetworkHandler::readyRead()
 {
-    QTcpSocket *socket = static_cast<QTcpSocket*>(sender());
-    QByteArray *buffer = m_buffers.value(socket);
-    qint32 *s = m_sizes.value(socket);
+    m_socket = static_cast<QTcpSocket*>(sender());
+    QByteArray *buffer = m_buffers.value(m_socket);
+    qint32 *s = m_sizes.value(m_socket);
     qint32 size = *s;
-    while(socket->bytesAvailable() > 0)
+    while(m_socket->bytesAvailable() > 0)
     {
-        buffer->append(socket->readAll());
+        buffer->append(m_socket->readAll());
         while((size == 0 && buffer->size() >=4) || (size > 0 && buffer->size() >= size))
         {
             if (size == 0 && buffer->size() >=4)
@@ -61,6 +61,16 @@ void NetworkHandler::readyRead()
     }
 }
 
+void NetworkHandler::sendMsg(QString msg){
+    QByteArray data = msg.toLatin1();
+    if(m_socket->state() == QAbstractSocket::ConnectedState)
+        {
+            m_socket->write(intToArray(data.size())); //write size of data
+            m_socket->write(data); //write the data itself
+            m_socket->waitForBytesWritten();
+        }
+}
+
 void NetworkHandler::dataRecieved(QByteArray data)
 {
     QString s_data = QString::fromLatin1(data.data());
@@ -73,5 +83,14 @@ qint32 NetworkHandler::arrayToInt(QByteArray source)
     qint32 temp;
     QDataStream data(&source, QIODevice::ReadWrite);
     data >> temp;
+    return temp;
+}
+
+QByteArray NetworkHandler::intToArray(qint32 source) //Use qint32 to ensure that the number have 4 bytes
+{
+    //Avoid use of cast, this is the Qt way to serialize objects
+    QByteArray temp;
+    QDataStream data(&temp, QIODevice::ReadWrite);
+    data << source;
     return temp;
 }
