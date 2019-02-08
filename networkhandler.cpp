@@ -62,6 +62,7 @@ void NetworkHandler::readyRead()
 }
 
 void NetworkHandler::sendMsg(QString msg){
+    qDebug() << "Sent MSG: " << msg;
     QByteArray data = msg.toLatin1();
     if(m_socket->state() == QAbstractSocket::ConnectedState)
         {

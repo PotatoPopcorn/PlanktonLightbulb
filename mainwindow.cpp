@@ -94,4 +94,6 @@ void MainWindow::recieveCommand(QString cmd)
             qDebug() << "Invalid Command: " << cmd;
         }
     }
+
+    networkHand->sendMsg("RECV;");
 }

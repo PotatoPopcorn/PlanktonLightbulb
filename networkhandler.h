@@ -22,11 +22,13 @@ public:
 signals:
     void commandRecieved(QString cmd);
 
+public slots:
+    void sendMsg(QString msg);
+
 private slots:
     void newConnection();
     void disconnected();
     void readyRead();
-    void sendMsg(QString msg);
 
 private:
     quint16 m_port = 21000;
