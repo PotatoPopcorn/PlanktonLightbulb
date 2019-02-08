@@ -23,7 +23,9 @@ public:
     ~ChannelManager();
 
     bool setChan(int chan, int value);
+    bool setChanRAI(int sChan, int eChan, int intv, int value);
     bool setFade(int chan, int value, int time);
+    bool setFadeRAI(int sChan, int eChan, int intv, int value, int time);
     void setOutput(OutputHandler *outputHand);
 
 public slots:

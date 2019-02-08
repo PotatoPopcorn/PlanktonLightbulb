@@ -31,9 +31,25 @@ bool ChannelManager::setChan(int chan, int value)
     return true;
 }
 
+bool ChannelManager::setChanRAI(int sChan, int eChan, int intv, int value)
+{
+    for(int i = sChan; i <= eChan; i += intv){
+        setChan(i, value);
+    }
+    return true;
+}
+
 bool ChannelManager::setFade(int chan, int value, int time)
 {
     m_chans[chan-1]->setFade(value, time);
+    return true;
+}
+
+bool ChannelManager::setFadeRAI(int sChan, int eChan, int intv, int value, int time)
+{
+    for(int i = sChan; i <= eChan; i += intv){
+        setFade(i, value, time);
+    }
     return true;
 }
 

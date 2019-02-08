@@ -108,9 +108,7 @@ void MainWindow::recieveCommand(QString cmd)
             int intv = query.at(2).toInt(&res3);
             int val = query.at(3).toInt(&res4);
             if(res1 && res2 && res3 && res4){
-                for(int i = sChan; i <= eChan; i += intv){
-                    chans->setChan(i, val);
-                }
+                chans->setChanRAI(sChan, eChan, intv, val);
             }
             else
             {
