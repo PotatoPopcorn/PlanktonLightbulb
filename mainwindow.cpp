@@ -94,6 +94,36 @@ void MainWindow::recieveCommand(QString cmd)
             qDebug() << "Invalid Command: " << cmd;
         }
     }
+    else if (cmd.startsWith("SetChanRangIntv(", Qt::CaseInsensitive))
+    {
+        // StartChan, EndChan, Interval, Value
+        QString params = cmd.mid(16, cmd.indexOf(')')-16);
+        QRegExp rx("(\\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 4)
+        {
+            bool res1, res2, res3, res4;
+            int sChan = query.at(0).toInt(&res1);
+            int eChan = query.at(1).toInt(&res2);
+            int intv = query.at(2).toInt(&res3);
+            int val = query.at(3).toInt(&res4);
+            if(res1 && res2 && res3 && res4){
+                for(int i = sChan; i <= eChan; i += intv){
+                    chans->setChan(i, val);
+                }
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
 
     networkHand->sendMsg("RECV;");
 }
