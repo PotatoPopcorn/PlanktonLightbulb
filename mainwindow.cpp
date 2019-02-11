@@ -94,8 +94,119 @@ void MainWindow::recieveCommand(QString cmd)
             qDebug() << "Invalid Command: " << cmd;
         }
     }
+    else if (cmd.compare("Blackout()", Qt::CaseInsensitive) == 0)
+    {
+        chans->setChanRAI(1, 512, 1, 0);
+    }
+    else if (cmd.startsWith("SetAllChans(", Qt::CaseInsensitive))
+    {
+        QString params = cmd.mid(12, cmd.indexOf(')')-12);
+        QRegExp rx("(\\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 1)
+        {
+            bool res;
+            int val = query.at(0).toInt(&res);
+            if(res)
+            {
+                chans->setChanRAI(1, 512, 1, val);
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
+    else if (cmd.startsWith("SetAllChansFade(", Qt::CaseInsensitive))
+    {
+        QString params = cmd.mid(16, cmd.indexOf(')')-16);
+        QRegExp rx("(\\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 2)
+        {
+            bool res1, res2;
+            int val = query.at(0).toInt(&res1);
+            int time = query.at(1).toInt(&res2);
+            if(res1 && res2)
+            {
+                chans->setFadeRAI(1, 512, 1, val, time);
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
+    else if (cmd.startsWith("SetChanRang(", Qt::CaseInsensitive))
+    {
+        // StartChan, EndChan, Value
+        QString params = cmd.mid(12, cmd.indexOf(')')-12);
+        QRegExp rx("(\\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 3)
+        {
+            bool res1, res2, res3;
+            int sChan = query.at(0).toInt(&res1);
+            int eChan = query.at(1).toInt(&res2);
+            int val = query.at(2).toInt(&res3);
+            if(res1 && res2 && res3){
+                chans->setChanRAI(sChan, eChan, 1, val);
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
+    else if (cmd.startsWith("SetChanRangFade(", Qt::CaseInsensitive))
+    {
+        // StartChan, EndChan, Interval, Value
+        QString params = cmd.mid(16, cmd.indexOf(')')-16);
+        QRegExp rx("(\\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 4)
+        {
+            bool res1, res2, res3, res4;
+            int sChan = query.at(0).toInt(&res1);
+            int eChan = query.at(1).toInt(&res2);
+            int val = query.at(2).toInt(&res3);
+            int time = query.at(3).toInt(&res4);
+            if(res1 && res2 && res3 && res4){
+                chans->setFadeRAI(sChan, eChan, 1, val, time);
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
     else if (cmd.startsWith("SetChanRangIntv(", Qt::CaseInsensitive))
     {
+        qDebug() << "RAI";
         // StartChan, EndChan, Interval, Value
         QString params = cmd.mid(16, cmd.indexOf(')')-16);
         QRegExp rx("(\\,)");
@@ -109,6 +220,35 @@ void MainWindow::recieveCommand(QString cmd)
             int val = query.at(3).toInt(&res4);
             if(res1 && res2 && res3 && res4){
                 chans->setChanRAI(sChan, eChan, intv, val);
+            }
+            else
+            {
+                //Bad Command
+                qDebug() << "Invalid Command: " << cmd;
+            }
+        }
+        else
+        {
+            //Bad Command
+            qDebug() << "Invalid Command: " << cmd;
+        }
+    }
+    else if (cmd.startsWith("SetChanRangIntvFade(", Qt::CaseInsensitive))
+    {
+        // StartChan, EndChan, Interval, Value, Time
+        QString params = cmd.mid(20, cmd.indexOf(')')-20);
+        QRegExp rx("(\\,)");
+        QStringList query = params.split(rx);
+        if(query.count() == 5)
+        {
+            bool res1, res2, res3, res4, res5;
+            int sChan = query.at(0).toInt(&res1);
+            int eChan = query.at(1).toInt(&res2);
+            int intv = query.at(2).toInt(&res3);
+            int val = query.at(3).toInt(&res4);
+            int time = query.at(4).toInt(&res5);
+            if(res1 && res2 && res3 && res4){
+                chans->setFadeRAI(sChan, eChan, intv, val, time);
             }
             else
             {

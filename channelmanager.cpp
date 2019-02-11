@@ -47,6 +47,7 @@ bool ChannelManager::setFade(int chan, int value, int time)
 
 bool ChannelManager::setFadeRAI(int sChan, int eChan, int intv, int value, int time)
 {
+    qDebug() <<"RAI: " << sChan << eChan << intv << value << time;
     for(int i = sChan; i <= eChan; i += intv){
         setFade(i, value, time);
     }
