@@ -1,6 +1,7 @@
 #ifndef NETWORKHANDLER_H
 #define NETWORKHANDLER_H
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QMessageBox>
 #include <QObject>
@@ -41,6 +42,7 @@ private:
     void dataRecieved(QByteArray data);
     qint32 arrayToInt(QByteArray source);
     QByteArray intToArray(qint32 source);
+    quint16 findPort(quint16 defaultPort);
 
 };
 

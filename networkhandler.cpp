@@ -3,6 +3,7 @@
 NetworkHandler::NetworkHandler(QObject *parent) : QObject(parent)
 {
     qDebug() << "Starting Server";
+    m_port = findPort(m_port);
     m_server = new QTcpServer(this);
     connect(m_server, &QTcpServer::newConnection, this, &NetworkHandler::newConnection);
     qDebug() << "Listening: " << m_server->listen(QHostAddress::Any, m_port);
@@ -94,4 +95,25 @@ QByteArray NetworkHandler::intToArray(qint32 source) //Use qint32 to ensure that
     QDataStream data(&temp, QIODevice::ReadWrite);
     data << source;
     return temp;
+}
+
+quint16 NetworkHandler::findPort(quint16 defaultPort)
+{
+    quint16 port = defaultPort;
+    for(int i = 0; i < QCoreApplication::arguments().length()-1; i++){
+        if(QCoreApplication::arguments().at(i) == "-p"){
+            bool res;
+            quint16 newPort = QCoreApplication::arguments().at(i+1).toUShort(&res);
+            if(res)
+            {
+                port = newPort;
+            }
+            else
+            {
+                qDebug() << "Invalid port using default of: " << defaultPort;
+            }
+        }
+    }
+    qDebug() << "Using port " << port;
+    return port;
 }
